@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ import java.util.UUID;
 public class AppointmentOption {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "APO_ID")
     UUID id;
 
@@ -22,9 +23,13 @@ public class AppointmentOption {
     @Column(name = "OPT_DAT")
     LocalDateTime datum;
 
+//    @ElementCollection
+//    @CollectionTable(name = "teilnehmer_yes", joinColumns = @JoinColumn(name = "APO_ID"))
     @Column(name = "OPT_YES")
     List<String> teilnehmerYes;
 
+//    @ElementCollection
+//    @CollectionTable(name = "teilnehmer_no", joinColumns = @JoinColumn(name = "APO_ID"))
     @Column(name= "OPT_NO")
     List<String> teilnehmerNo;
 

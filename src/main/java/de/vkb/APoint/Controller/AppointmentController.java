@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -83,8 +84,10 @@ public class AppointmentController {
     @GetMapping("/fake")
     public List<Appointment> createFakeAppointmentsForUser() {
         Faker faker = new Faker();
-        appointmentRepository.saveAll(faker.createFakeAppointments(UUID.fromString("8c7d18d6-f50f-4ee6-8840-1a19b25298c2")));
-        optionRepository.saveAll(faker.createFakeOptions(UUID.fromString("ee3e018b-4e8a-48d9-b605-293e0dd4c300")));
+//        appointmentRepository.saveAll(faker.createFakeAppointments(UUID.fromString("8c7d18d6-f50f-4ee6-8840-1a19b25298c2")));
+//        optionRepository.saveAll(faker.createFakeOptions(UUID.fromString("9de47f7f-bb98-4b79-a0f5-b6b495c64dd3")));
+        optionRepository.saveAll(faker.createFakeOptions(UUID.fromString("9de47f7f-bb98-4b79-a0f5-b6b495c64dd3")));
+
         return appointmentRepository.findAll();
     }
 

@@ -43,8 +43,8 @@ public class Faker {
     public List<AppointmentOption> createFakeOptions(UUID uuid){
         List<AppointmentOption> optionsList = new ArrayList<>();
         List<String> input = new ArrayList<>();
-        input.add("Heinz");
-        input.add("Peter");
+        input.add("Test1");
+        input.add("Test2");
 
         AppointmentOption option1 = new AppointmentOption();
         option1.setTeilnehmerYes(input);
