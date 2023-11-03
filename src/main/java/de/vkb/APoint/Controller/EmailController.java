@@ -16,8 +16,7 @@ public class EmailController {
     private EmailService emailService;
     @PostMapping
     public ResponseEntity<String> sendEmail(@RequestBody EmailRequest emailRequest) {
-        // Assuming EmailRequest is a POJO class to represent the JSON structure.
-        emailService.sendEmail(emailRequest.getTo(), emailRequest.getSubject(), emailRequest.getText());
+        emailService.sendEmail(emailRequest.getFrom(), emailRequest.getTo(), emailRequest.getSubject(), emailRequest.getText());
         return ResponseEntity.ok("Email sent successfully.");
     }
 }

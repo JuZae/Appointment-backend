@@ -1,6 +1,10 @@
 package de.vkb.APoint.POJO;
 
+/**
+ * POJO Class to represent the JSON structure
+ */
 public class EmailRequest {
+    private String from;
     private String to;
     private String subject;
     private String text;
@@ -27,5 +31,13 @@ public class EmailRequest {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
     }
 }
