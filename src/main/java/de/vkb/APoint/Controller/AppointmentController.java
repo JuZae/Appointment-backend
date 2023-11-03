@@ -1,12 +1,11 @@
 package de.vkb.APoint.Controller;
 
+import de.vkb.APoint.Entity.Appointment;
 import de.vkb.APoint.Entity.AppointmentOption;
 import de.vkb.APoint.Entity.User;
 import de.vkb.APoint.Repository.AppointmentOptionRepository;
 import de.vkb.APoint.Repository.AppointmentRepository;
-import de.vkb.APoint.Entity.Appointment;
 import de.vkb.APoint.Repository.UserRepository;
-import de.vkb.APoint.Service.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 
@@ -36,7 +34,6 @@ public class AppointmentController {
     public List<Appointment> getAllAppointments(){
         return appointmentRepository.findAll();
     }
-
 
     @GetMapping("/getUsers")
     public List<User> getAllUsers() {
@@ -76,21 +73,6 @@ public class AppointmentController {
         return ResponseEntity.ok(HttpStatus.NOT_ACCEPTABLE);
     }
 
-    public ResponseEntity deleteAppointment(@RequestBody Appointment appointment) {
-        appointmentRepository.delete(appointment);
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
-
-    @GetMapping("/fake")
-    public List<Appointment> createFakeAppointmentsForUser() {
-        Faker faker = new Faker();
-//        appointmentRepository.saveAll(faker.createFakeAppointments(UUID.fromString("8c7d18d6-f50f-4ee6-8840-1a19b25298c2")));
-//        optionRepository.saveAll(faker.createFakeOptions(UUID.fromString("9de47f7f-bb98-4b79-a0f5-b6b495c64dd3")));
-        optionRepository.saveAll(faker.createFakeOptions(UUID.fromString("9de47f7f-bb98-4b79-a0f5-b6b495c64dd3")));
-
-        return appointmentRepository.findAll();
-    }
-
     @GetMapping("/getUserById/{id}")
     public List<Appointment> getUsersTest(@PathVariable String id) {
         return userRepository.findAppointmentsById(UUID.fromString(id));
@@ -107,7 +89,6 @@ public class AppointmentController {
         optionRepository.save(appointmentOption);
         return optionRepository.findByFK(UUID.fromString(id));
     }
-
 
     @GetMapping("/getOptions/{id}")
     public List<AppointmentOption> getUpdatedAppointments(@PathVariable String id) {
