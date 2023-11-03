@@ -3,6 +3,7 @@ package de.vkb.APoint.Controller;
 
 import de.vkb.APoint.Service.FetchFormatService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -16,7 +17,8 @@ import java.util.Map;
 @RequestMapping("/api")
 class AutocompleteController {
 
-    private final  String API_KEY = "AIzaSyDUjRhIuQEwnHRnOMo5D6IZ0t9KkkrrzGQ";
+    @Value("${api.key}")
+    private String API_KEY;
     private final RestTemplate restTemplate;
 
     @Autowired
