@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+#    container_name: apoint_db
+    ports:
+      - "5432:5432"
+    environment:
+#      POSTGRES_DB: apoint_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+
+#  backend:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - postgres
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/your_database_name
+#      SPRING_DATASOURCE_USERNAME: your_database_user
+#      SPRING_DATASOURCE_PASSWORD: your_database_password

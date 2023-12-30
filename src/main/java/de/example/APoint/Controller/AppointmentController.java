@@ -1,11 +1,11 @@
-package de.vkb.APoint.Controller;
+package de.example.APoint.Controller;
 
-import de.vkb.APoint.Entity.Appointment;
-import de.vkb.APoint.Entity.AppointmentOption;
-import de.vkb.APoint.Entity.User;
-import de.vkb.APoint.Repository.AppointmentOptionRepository;
-import de.vkb.APoint.Repository.AppointmentRepository;
-import de.vkb.APoint.Repository.UserRepository;
+import de.example.APoint.Entity.Appointment;
+import de.example.APoint.Entity.AppointmentOption;
+import de.example.APoint.Entity.User;
+import de.example.APoint.Repository.AppointmentOptionRepository;
+import de.example.APoint.Repository.AppointmentRepository;
+import de.example.APoint.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

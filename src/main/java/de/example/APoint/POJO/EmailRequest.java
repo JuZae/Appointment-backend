@@ -1,4 +1,4 @@
-package de.vkb.APoint.POJO;
+package de.example.APoint.POJO;
 
 /**
  * POJO Class to represent the JSON structure

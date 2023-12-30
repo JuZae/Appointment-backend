@@ -1,4 +1,4 @@
-package de.vkb.APoint.Entity;
+package de.example.APoint.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -28,6 +28,7 @@ public class AppointmentOption {
     @Column(name= "OPT_NO")
     List<String> teilnehmerNo;
 
+    //Appointment ID
     @Column(name = "AP_U_ID")
     UUID fk_appID;
 }

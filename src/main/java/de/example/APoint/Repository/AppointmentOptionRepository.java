@@ -1,6 +1,6 @@
-package de.vkb.APoint.Repository;
+package de.example.APoint.Repository;
 
-import de.vkb.APoint.Entity.AppointmentOption;
+import de.example.APoint.Entity.AppointmentOption;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

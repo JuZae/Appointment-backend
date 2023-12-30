@@ -1,7 +1,7 @@
-package de.vkb.APoint.Controller;
+package de.example.APoint.Controller;
 
 
-import de.vkb.APoint.Service.FetchFormatService;
+import de.example.APoint.Service.FetchFormatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:9000")
 @RequestMapping("/api")
 class AutocompleteController {
 

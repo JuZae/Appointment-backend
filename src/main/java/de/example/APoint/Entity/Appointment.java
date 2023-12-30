@@ -1,4 +1,4 @@
-package de.vkb.APoint.Entity;
+package de.example.APoint.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -27,6 +27,7 @@ public class Appointment {
     @Column(name = "BESCHR")
     String beschreibung;
 
+    //User ID
     @Column(name = "FK_U_ID")
     UUID fk_userID;
 }

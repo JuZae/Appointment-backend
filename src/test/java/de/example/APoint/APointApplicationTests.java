@@ -1,4 +1,4 @@
-package de.vkb.APoint;
+package de.example.APoint;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

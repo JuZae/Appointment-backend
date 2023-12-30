@@ -1,7 +1,7 @@
-package de.vkb.APoint.Controller;
+package de.example.APoint.Controller;
 
-import de.vkb.APoint.POJO.EmailRequest;
-import de.vkb.APoint.Service.EmailService;
+import de.example.APoint.POJO.EmailRequest;
+import de.example.APoint.Service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

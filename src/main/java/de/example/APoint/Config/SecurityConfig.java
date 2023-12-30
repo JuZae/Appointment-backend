@@ -1,0 +1,29 @@
+package de.example.APoint.Config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                // Enable CORS and CSRF protection
+                .cors().and()
+                .csrf().disable()
+
+                // Configure authorization rules
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/**").permitAll()  // Allow access to any public endpoints
+                        .anyRequest().authenticated()              // Require authentication for all other requests
+                )
+                .oauth2Login();  // Configure OAuth2 login
+
+        return http.build();
+    }
+}

@@ -1,4 +1,4 @@
-package de.vkb.APoint.Entity;
+package de.example.APoint.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
