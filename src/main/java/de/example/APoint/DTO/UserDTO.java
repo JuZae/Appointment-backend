@@ -1,32 +1,16 @@
-package de.example.APoint.Entity;
-
-import jakarta.persistence.*;
-import lombok.Data;
+package de.example.APoint.DTO;
 
 import java.util.UUID;
-
-@Entity
-@Data
-@Table(name="registeredusers")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "U_ID")
+public class UserDTO {
     private UUID id;
-
-    @Column(name = "UNAME")
     private String username;
-
-    @Column(name = "EMAIL")
     private String email;
-
-    @Column(name = "PWRD")
     private String password;
 
-    public User() {
+    public UserDTO() {
     }
 
-    public User(UUID id, String username, String email, String password) {
+    public UserDTO(UUID id, String username, String email, String password) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -65,3 +49,4 @@ public class User {
         this.password = password;
     }
 }
+
