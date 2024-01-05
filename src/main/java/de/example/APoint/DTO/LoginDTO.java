@@ -1,6 +1,11 @@
 package de.example.APoint.DTO;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class LoginDTO {
+    @Email(message = "Ungültige E-Mail-Adresse")
+    @NotBlank(message = "E-Mail darf nicht leer sein")
     private String email;
     private String password;
 

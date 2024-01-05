@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class EmailController {
     @Autowired
     private EmailService emailService;
+
     @PostMapping
     public ResponseEntity sendEmail(@RequestBody EmailRequest emailRequest) {
             emailService.sendEmail(emailRequest.getTo(), emailRequest.getSubject(), emailRequest.getBody());
