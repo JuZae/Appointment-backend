@@ -61,10 +61,8 @@ public class UserServiceImpl implements UserService{
     public Boolean checkIfUserIsInDB(UUID id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
-            // Logik, wenn der Benutzer gefunden wird
             return true;
         } else {
-            // Logik, wenn der Benutzer nicht gefunden wird
             return false;
         }
     }
