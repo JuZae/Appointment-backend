@@ -2,6 +2,7 @@ package de.example.APoint.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -16,19 +17,21 @@ public class AppointmentOption {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "APO_ID")
-    UUID id;
+    @NotNull
+    private UUID id;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     @Column(name = "OPT_DAT")
-    LocalDateTime datum;
+    private LocalDateTime datum;
 
     @Column(name = "OPT_YES")
-    List<String> teilnehmerYes;
+    private List<String> teilnehmerYes;
 
     @Column(name= "OPT_NO")
-    List<String> teilnehmerNo;
+    private List<String> teilnehmerNo;
 
     //Appointment ID
     @Column(name = "AP_U_ID")
-    UUID fk_appID;
+    @NotNull
+    private UUID fk_appID;
 }

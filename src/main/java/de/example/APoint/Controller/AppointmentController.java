@@ -6,6 +6,7 @@ import de.example.APoint.Entity.User;
 import de.example.APoint.Repository.AppointmentOptionRepository;
 import de.example.APoint.Repository.AppointmentRepository;
 import de.example.APoint.Repository.UserRepository;
+import de.example.APoint.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api")
+@RequestMapping("/api/app")
 public class AppointmentController {
 
     @Autowired
@@ -29,6 +30,9 @@ public class AppointmentController {
 
     @Autowired
     AppointmentOptionRepository optionRepository;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/getAll")
     public List<Appointment> getAllAppointments(){
@@ -53,24 +57,21 @@ public class AppointmentController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PostMapping("/getObj")
-    public List<Appointment> getObjectFromFrontend(@RequestBody Appointment location) {
-        appointmentRepository.save(location);
-        return appointmentRepository.findAll();
-    }
+    //TODO: check if userID is in database!
 
     /**
-     * How to save an Appointment with corresponding User ID (maybe ResponseBody instead of pathvariable)
+     * Checks if user is in database before saving the appointment
+     * @param appointment
+     * @return ResponseEntity
      */
-    //TODO: check if User id is in database (new method for that) and not null
-    @PostMapping("/saveApp/{id}")
-    public ResponseEntity saveAppointmentWithId(UUID id, @RequestBody Appointment appointment) {
-        if(id != null) {
-            appointment.setFk_userID(id);
+    @PostMapping("/saveApp")
+    public ResponseEntity saveAppointment(@RequestBody Appointment appointment) {
+        Boolean isUserInDB = userService.checkIfUserIsInDB(appointment.getFk_userID());
+        if(isUserInDB) {
             appointmentRepository.save(appointment);
             return ResponseEntity.ok(HttpStatus.OK);
         }
-        return ResponseEntity.ok(HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/getUserById/{id}")

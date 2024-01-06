@@ -1,6 +1,7 @@
 package de.example.APoint.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.UUID;
@@ -12,15 +13,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "U_ID")
+    @NotNull
     private UUID id;
 
     @Column(name = "UNAME")
     private String username;
 
     @Column(name = "EMAIL")
+    @NotNull
     private String email;
 
     @Column(name = "PWRD")
+    @NotNull
     private String password;
 
     public User() {

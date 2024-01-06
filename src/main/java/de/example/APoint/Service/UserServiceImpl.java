@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -19,8 +20,6 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    private UserDTO userDTO;
 
     @Override
     public String addUser(UserDTO userDTO) {
@@ -55,6 +54,18 @@ public class UserServiceImpl implements UserService{
             }
         } else {
             return new LoginResponse("Email does not exist", false);
+        }
+    }
+
+    @Override
+    public Boolean checkIfUserIsInDB(UUID id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            // Logik, wenn der Benutzer gefunden wird
+            return true;
+        } else {
+            // Logik, wenn der Benutzer nicht gefunden wird
+            return false;
         }
     }
 }

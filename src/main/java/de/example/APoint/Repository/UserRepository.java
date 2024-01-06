@@ -2,6 +2,7 @@ package de.example.APoint.Repository;
 
 import de.example.APoint.Entity.Appointment;
 import de.example.APoint.Entity.User;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
