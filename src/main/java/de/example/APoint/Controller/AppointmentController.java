@@ -74,14 +74,10 @@ public class AppointmentController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/getUserById/{id}")
-    public List<Appointment> getUsersTest(@PathVariable String id) {
-        return userRepository.findAppointmentsById(UUID.fromString(id));
-    }
 
     @GetMapping("/getAppById/{id}")
-    public List<Appointment> getAppointmentsById(@PathVariable String id) {
-        return appointmentRepository.findAllById(Collections.singleton(UUID.fromString(id)));
+    public List<Appointment> getAllAppointmentsByUserID(@PathVariable String id) {
+        return appointmentRepository.findByFkUserID(UUID.fromString(id));
     }
 
     @PostMapping("/updateAppById/{id}")
