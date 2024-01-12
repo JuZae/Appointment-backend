@@ -12,8 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -75,9 +75,14 @@ public class AppointmentController {
     }
 
 
-    @GetMapping("/getAppById/{id}")
+    @GetMapping("/getAppByUserId/{id}")
     public List<Appointment> getAllAppointmentsByUserID(@PathVariable String id) {
         return appointmentRepository.findByFkUserID(UUID.fromString(id));
+    }
+
+    @GetMapping("/getAppById/{id}")
+    public Optional<Appointment> getAllAppointmentsByAppID(@PathVariable String id) {
+        return appointmentRepository.findById(UUID.fromString(id));
     }
 
     @PostMapping("/updateAppById/{id}")
