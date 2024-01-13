@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:9000")
 @RequestMapping("/sendEmail")
 public class EmailController {
     @Autowired

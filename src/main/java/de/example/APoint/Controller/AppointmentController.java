@@ -18,7 +18,7 @@ import java.util.UUID;
 
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:9000")
 @RequestMapping("/api/app")
 public class AppointmentController {
 
@@ -77,6 +77,7 @@ public class AppointmentController {
 
     @GetMapping("/getAppByUserId/{id}")
     public List<Appointment> getAllAppointmentsByUserID(@PathVariable String id) {
+        System.out.println("ISCALLEDXXXXX");
         return appointmentRepository.findByFkUserID(UUID.fromString(id));
     }
 

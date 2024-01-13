@@ -1,12 +1,20 @@
 package de.example.APoint.Response;
 
-public class LoginResponse {
-    String message;
-    Boolean status;
+import de.example.APoint.Entity.User;
 
-    public LoginResponse(String message, Boolean status) {
-        this.message = message;
-        this.status = status;
+import java.util.UUID;
+
+public class LoginResponse {
+    private String message;
+    private Boolean status;
+    private String token; //JWT Token
+    private UUID userId;
+
+    public LoginResponse(String message, Boolean status, String token, UUID userId) {
+        this.message    = message;
+        this.status     = status;
+        this.token      = token;
+        this.userId     = userId;
     }
 
     public String getMessage() {
@@ -23,5 +31,21 @@ public class LoginResponse {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 }

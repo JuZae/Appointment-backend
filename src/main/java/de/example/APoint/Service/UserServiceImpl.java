@@ -5,6 +5,7 @@ import de.example.APoint.DTO.UserDTO;
 import de.example.APoint.Entity.User;
 import de.example.APoint.Repository.UserRepository;
 import de.example.APoint.Response.LoginResponse;
+import de.example.APoint.Util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,9 @@ public class UserServiceImpl implements UserService{
         return user.getUsername();
     }
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @Override
     public LoginResponse loginUser(LoginDTO loginDTO) {
         User userDBCheck = userRepository.findByEmail(loginDTO.getEmail());
@@ -43,19 +47,39 @@ public class UserServiceImpl implements UserService{
             Boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
 
             if(isPwdRight) {
-                Optional<User> userEmailPasswordCheck = userRepository.findOneByEmailAndPassword(loginDTO.getEmail(), encodedPassword);
-                if(userEmailPasswordCheck.isPresent()) {
-                    return new LoginResponse("Login Success", true);
-                } else {
-                    return new LoginResponse("Login Failed", false);
-                }
+                String token = jwtUtil.generateToken(userDBCheck.getEmail());
+                return new LoginResponse("Login Success", true, token, userDBCheck.getId());
             } else {
-                return new LoginResponse("Password doesn't match", false);
+                return new LoginResponse("Password doesn't match", false, null, null);
             }
         } else {
-            return new LoginResponse("Email does not exist", false);
+            return new LoginResponse("Email does not exist", false, null, null);
         }
     }
+
+//    @Override
+//    public LoginResponse loginUser(LoginDTO loginDTO) {
+//        User userDBCheck = userRepository.findByEmail(loginDTO.getEmail());
+//
+//        if(userDBCheck != null) {
+//            String password = loginDTO.getPassword();
+//            String encodedPassword = userDBCheck.getPassword();
+//            Boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
+//
+//            if(isPwdRight) {
+//                Optional<User> userEmailPasswordCheck = userRepository.findOneByEmailAndPassword(loginDTO.getEmail(), encodedPassword);
+//                if(userEmailPasswordCheck.isPresent()) {
+//                    return new LoginResponse("Login Success", true);
+//                } else {
+//                    return new LoginResponse("Login Failed", false);
+//                }
+//            } else {
+//                return new LoginResponse("Password doesn't match", false);
+//            }
+//        } else {
+//            return new LoginResponse("Email does not exist", false);
+//        }
+//    }
 
     @Override
     public Boolean checkIfUserIsInDB(UUID id) {

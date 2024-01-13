@@ -4,14 +4,17 @@ import de.example.APoint.DTO.UserDTO;
 import de.example.APoint.Entity.User;
 import de.example.APoint.Repository.UserRepository;
 import de.example.APoint.Service.UserService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:9000")
 @RequestMapping("/api/user")
 public class UserController {
 
@@ -31,5 +34,10 @@ public class UserController {
     @GetMapping("/getOne/{email}")
     public User getOneUser(@PathVariable @Email String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @GetMapping("/get/{userId}")
+    public User getOneUserById(@PathVariable String userId) {
+        return userRepository.findUserById(UUID.fromString(userId));
     }
 }

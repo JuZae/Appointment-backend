@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:9000")
 @RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
@@ -22,9 +22,19 @@ public class AuthController {
         return id;
     }
 
+//    @PostMapping("/login")
+//    public ResponseEntity<?> loginUser(@Valid @RequestBody LoginDTO loginDTO) {
+//        LoginResponse loginResponse = userService.loginUser(loginDTO);
+//        return ResponseEntity.ok(loginResponse);
+//    }
+
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@Valid @RequestBody LoginDTO loginDTO) {
         LoginResponse loginResponse = userService.loginUser(loginDTO);
-        return ResponseEntity.ok(loginResponse);
+        if (loginResponse.getStatus()) {
+            return ResponseEntity.ok(loginResponse);
+        } else {
+            return ResponseEntity.badRequest().body(loginResponse);
+        }
     }
 }
