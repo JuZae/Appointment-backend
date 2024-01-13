@@ -3,10 +3,14 @@ package de.example.APoint.Repository;
 import de.example.APoint.Entity.AppointmentOption;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
 
+@EnableJpaRepositories
+@Repository
 public interface AppointmentOptionRepository extends JpaRepository<AppointmentOption, UUID>{
 
     @Query(value = "SELECT * FROM appointmentoptions a" +

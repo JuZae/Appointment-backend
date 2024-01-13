@@ -77,7 +77,6 @@ public class AppointmentController {
 
     @GetMapping("/getAppByUserId/{id}")
     public List<Appointment> getAllAppointmentsByUserID(@PathVariable String id) {
-        System.out.println("ISCALLEDXXXXX");
         return appointmentRepository.findByFkUserID(UUID.fromString(id));
     }
 
