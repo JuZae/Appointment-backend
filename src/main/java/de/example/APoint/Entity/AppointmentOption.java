@@ -16,7 +16,7 @@ public class AppointmentOption {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "APO_ID")
+    @Column(name = "APOPT_ID")
     @NotNull
     private UUID id;
 
@@ -30,8 +30,11 @@ public class AppointmentOption {
     @Column(name= "OPT_NO")
     private List<String> teilnehmerNo;
 
+    @Column(name = "DEADLINE")
+    private Boolean deadline;
+
     //Appointment ID
-    @Column(name = "AP_U_ID")
+    @Column(name = "FK_AP_ID")
     @NotNull
     private UUID fk_appID;
 }

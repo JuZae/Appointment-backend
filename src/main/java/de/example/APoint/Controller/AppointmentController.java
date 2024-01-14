@@ -6,6 +6,8 @@ import de.example.APoint.Entity.User;
 import de.example.APoint.Repository.AppointmentOptionRepository;
 import de.example.APoint.Repository.AppointmentRepository;
 import de.example.APoint.Repository.UserRepository;
+import de.example.APoint.Service.AppointmentService;
+import de.example.APoint.Service.AppointmentServiceImpl;
 import de.example.APoint.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,15 +36,18 @@ public class AppointmentController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/getAll")
-    public List<Appointment> getAllAppointments(){
-        return appointmentRepository.findAll();
-    }
+    @Autowired
+    AppointmentService appointmentService;
 
-    @GetMapping("/getUsers")
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
+//    @GetMapping("/getAll")
+//    public List<Appointment> getAllAppointments(){
+//        return appointmentRepository.findAll();
+//    }
+//
+//    @GetMapping("/getUsers")
+//    public List<User> getAllUsers() {
+//        return userRepository.findAll();
+//    }
 
     @PostMapping("/CreateNewAppointment")
     public ResponseEntity createNewAppointment(@RequestBody Appointment appointment) {
@@ -50,14 +55,12 @@ public class AppointmentController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @GetMapping("/del")
-    public ResponseEntity deleteAll(){
-        userRepository.deleteAll();
-        appointmentRepository.deleteAll();
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
-
-    //TODO: check if userID is in database!
+//    @GetMapping("/del")
+//    public ResponseEntity deleteAll(){
+//        userRepository.deleteAll();
+//        appointmentRepository.deleteAll();
+//        return ResponseEntity.ok(HttpStatus.OK);
+//    }
 
     /**
      * Checks if user is in database before saving the appointment
@@ -67,6 +70,7 @@ public class AppointmentController {
     @PostMapping("/saveApp")
     public ResponseEntity saveAppointment(@RequestBody Appointment appointment) {
         Boolean isUserInDB = userService.checkIfUserIsInDB(appointment.getFk_userID());
+        System.out.println(appointment.getFk_userID());
         if(isUserInDB) {
             appointmentRepository.save(appointment);
             return ResponseEntity.ok(HttpStatus.OK);
@@ -77,7 +81,9 @@ public class AppointmentController {
 
     @GetMapping("/getAppByUserId/{id}")
     public List<Appointment> getAllAppointmentsByUserID(@PathVariable String id) {
-        return appointmentRepository.findByFkUserID(UUID.fromString(id));
+        var response = appointmentRepository.findByFkUserID(UUID.fromString(id));
+        System.out.println("RESPONSE /getAppByUserId/{id} " + response);
+        return response;
     }
 
     @GetMapping("/getAppById/{id}")

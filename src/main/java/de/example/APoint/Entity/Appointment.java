@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -24,13 +26,72 @@ public class Appointment {
     private String ort;
 
     @Column(name = "TEILN")
-    private String teilnehmer;
+    private List<String> teilnehmer;
 
     @Column(name = "BESCHR")
     private String beschreibung;
+
+    @Column(name = "DEADLINE")
+    private LocalDateTime deadline;
 
     //User ID
     @Column(name = "FK_U_ID")
     @NotNull
     private UUID fk_userID;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getBez() {
+        return bez;
+    }
+
+    public void setBez(String bez) {
+        this.bez = bez;
+    }
+
+    public String getOrt() {
+        return ort;
+    }
+
+    public void setOrt(String ort) {
+        this.ort = ort;
+    }
+
+    public List<String> getTeilnehmer() {
+        return teilnehmer;
+    }
+
+    public void setTeilnehmer(List<String> teilnehmer) {
+        this.teilnehmer = teilnehmer;
+    }
+
+    public String getBeschreibung() {
+        return beschreibung;
+    }
+
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+
+    public LocalDateTime getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(LocalDateTime deadline) {
+        this.deadline = deadline;
+    }
+
+    public UUID getFk_userID() {
+        return fk_userID;
+    }
+
+    public void setFk_userID(UUID fk_userID) {
+        this.fk_userID = fk_userID;
+    }
 }
