@@ -14,4 +14,5 @@ import java.util.UUID;
 public interface AppointmentRepository extends JpaRepository<Appointment, UUID> {
     @Query("SELECT a FROM Appointment a WHERE a.fk_userID = :fkUserID")
     List<Appointment> findByFkUserID(@Param("fkUserID") UUID fkUserID);
+
 }

@@ -30,9 +30,6 @@ public class AppointmentOption {
     @Column(name= "OPT_NO")
     private List<String> teilnehmerNo;
 
-    @Column(name = "DEADLINE")
-    private Boolean deadline;
-
     //Appointment ID
     @Column(name = "FK_AP_ID")
     @NotNull

@@ -1,5 +1,6 @@
 package de.example.APoint.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -26,11 +27,12 @@ public class Appointment {
     private String ort;
 
     @Column(name = "TEILN")
-    private List<String> teilnehmer;
+    private String teilnehmer;
 
     @Column(name = "BESCHR")
     private String beschreibung;
 
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     @Column(name = "DEADLINE")
     private LocalDateTime deadline;
 
@@ -63,11 +65,11 @@ public class Appointment {
         this.ort = ort;
     }
 
-    public List<String> getTeilnehmer() {
+    public String getTeilnehmer() {
         return teilnehmer;
     }
 
-    public void setTeilnehmer(List<String> teilnehmer) {
+    public void setTeilnehmer(String teilnehmer) {
         this.teilnehmer = teilnehmer;
     }
 

@@ -1,11 +1,13 @@
 package de.example.APoint.Controller;
 
+import de.example.APoint.DTO.AppointmentDTO;
 import de.example.APoint.Entity.Appointment;
 import de.example.APoint.Entity.AppointmentOption;
 import de.example.APoint.Entity.User;
 import de.example.APoint.Repository.AppointmentOptionRepository;
 import de.example.APoint.Repository.AppointmentRepository;
 import de.example.APoint.Repository.UserRepository;
+import de.example.APoint.Response.AppointmentResponse;
 import de.example.APoint.Service.AppointmentService;
 import de.example.APoint.Service.AppointmentServiceImpl;
 import de.example.APoint.Service.UserService;
@@ -26,6 +28,9 @@ public class AppointmentController {
 
     @Autowired
     AppointmentRepository appointmentRepository;
+
+    @Autowired
+    AppointmentOptionRepository appointmentOptionRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -68,22 +73,29 @@ public class AppointmentController {
      * @return ResponseEntity
      */
     @PostMapping("/saveApp")
-    public ResponseEntity saveAppointment(@RequestBody Appointment appointment) {
+    public ResponseEntity<?> saveAppointment(@RequestBody Appointment appointment) {
+        System.out.println("SAVEAPP IS CALLED " + appointment.toString());
         Boolean isUserInDB = userService.checkIfUserIsInDB(appointment.getFk_userID());
-        System.out.println(appointment.getFk_userID());
+
         if(isUserInDB) {
-            appointmentRepository.save(appointment);
-            return ResponseEntity.ok(HttpStatus.OK);
+            //TODO: hier die Deadline Funktionalität anstoßen!
+            Appointment appointmentResponse  = appointmentRepository.save(appointment);
+
+            return ResponseEntity.ok(appointmentResponse);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    //Persist AppointmentOption
+    @PostMapping("/saveAppOption")
+    public ResponseEntity<?> saveAppointmentOption(@RequestBody AppointmentOption appointmentOption) {
+        System.out.println("SAVEAPPOPTION IS CALLED " + appointmentOption.toString());
+            return ResponseEntity.ok(appointmentOptionRepository.save(appointmentOption));
+    }
 
     @GetMapping("/getAppByUserId/{id}")
     public List<Appointment> getAllAppointmentsByUserID(@PathVariable String id) {
-        var response = appointmentRepository.findByFkUserID(UUID.fromString(id));
-        System.out.println("RESPONSE /getAppByUserId/{id} " + response);
-        return response;
+        return appointmentRepository.findByFkUserID(UUID.fromString(id));
     }
 
     @GetMapping("/getAppById/{id}")
