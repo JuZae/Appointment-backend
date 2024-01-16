@@ -28,8 +28,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 // Configure authorization rules
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/auth/**").permitAll()// Permit all requests to your auth endpoints
-                        .requestMatchers("/api/events").permitAll()
+                        .requestMatchers("/api/auth/**", "/public/opt/**").permitAll()// Permit all requests to your auth endpoints
                         .anyRequest().authenticated()                // Require authentication for all other requests
                 )
 
