@@ -22,4 +22,5 @@ public interface AppointmentOptionRepository extends JpaRepository<AppointmentOp
 
     @Query("SELECT a FROM AppointmentOption a WHERE a.fk_appID = :appId")
     List<AppointmentOption> findByFk_appID(@Param("appId") UUID appId);
+
 }

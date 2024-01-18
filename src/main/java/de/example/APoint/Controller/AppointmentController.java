@@ -8,6 +8,7 @@ import de.example.APoint.Repository.AppointmentRepository;
 import de.example.APoint.Repository.UserRepository;
 import de.example.APoint.Service.AppointmentService;
 import de.example.APoint.Service.UserService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -89,16 +90,15 @@ public class AppointmentController {
         return appointmentRepository.findById(UUID.fromString(id));
     }
 
-//    @PostMapping("/updateAppById/{id}")
-//    public List<AppointmentOption> updatedAppointments(@PathVariable String id, @RequestBody AppointmentOption appointmentOption) {
-//        appointmentOption.setFk_appID(UUID.fromString(id));
-//        optionRepository.save(appointmentOption);
-//        return optionRepository.findByFK(UUID.fromString(id));
-//    }
+    @DeleteMapping("/deleteAppById/{appointmentId}")
+    public ResponseEntity<?> deleteAppointment(@PathVariable UUID appointmentId) {
+        try {
+            appointmentService.deleteAppointmentAndOptions(appointmentId);
+            return ResponseEntity.ok().body("Appointment and associated options deleted successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
+        }
+    }
 
-//    @GetMapping("/getOptions/{id}")
-//    public List<AppointmentOption> getUpdatedAppointments(@PathVariable String id) {
-//        return optionRepository.findByFK(UUID.fromString(id));
-//    }
 
 }

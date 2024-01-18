@@ -8,6 +8,7 @@ import de.example.APoint.Repository.AppointmentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -34,6 +35,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Boolean canEditAppointment(UUID appointmentId) {
         Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow();
+        System.out.println("Appointment Deadline: " + appointment.getDeadline());
+        System.out.println("Time: " + LocalDateTime.now());
         return LocalDateTime.now().isBefore(appointment.getDeadline());
     }
 
@@ -84,5 +87,16 @@ public class AppointmentServiceImpl implements AppointmentService {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Appointment not found"));
         return appointment.getTeilnehmer();
+    }
+
+    @Override
+    @Transactional
+    public void deleteAppointmentAndOptions(UUID appointmentId) {
+        // First delete all appointmentOptions associated with the appointment
+        List<AppointmentOption> options = appointmentOptionRepository.findByFk_appID(appointmentId);
+        appointmentOptionRepository.deleteAll(options);
+
+        //Then, delete appointment itself
+        appointmentRepository.deleteById(appointmentId);
     }
 }
