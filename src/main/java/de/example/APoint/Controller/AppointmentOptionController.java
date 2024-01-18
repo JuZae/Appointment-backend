@@ -43,7 +43,7 @@ public class AppointmentOptionController {
     //Get All AppointmentOptions associated with Appointment id
     @GetMapping("/getOpt/{appId}")
     public ResponseEntity<?> getAppointmentOptions(@PathVariable String appId){
-        var response = appointmentOptionRepository.findByFK(UUID.fromString(appId));
+        var response = appointmentOptionRepository.findByFk_appID(UUID.fromString(appId));
         return ResponseEntity.ok(response);
     }
 
