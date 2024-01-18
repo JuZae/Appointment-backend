@@ -1,5 +1,6 @@
 package de.example.APoint.Controller;
 
+import de.example.APoint.DTO.ParticipantDTO;
 import de.example.APoint.Entity.Appointment;
 import de.example.APoint.Entity.AppointmentOption;
 import de.example.APoint.Exceptions.DeadlineExceededException;
@@ -12,8 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:9000")
@@ -63,5 +63,39 @@ public class AppointmentOptionController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/add/addParticipant")
+    public ResponseEntity<?> addParticipant(@RequestBody ParticipantDTO participantDto) {
+        try {
+            Appointment appointment = appointmentRepository.findById(UUID.fromString(participantDto.getAppointmentId())).orElseThrow();
+            List<String> participants = getStrings(participantDto, appointment);
+
+            // Put list back together and turn it into a string
+            String updatedParticipantsStr = String.join(",", participants);
+            appointment.setTeilnehmer(updatedParticipantsStr);
+
+            appointmentRepository.save(appointment);
+
+            return ResponseEntity.ok(appointment);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
+    }
+
+    private static List<String> getStrings(ParticipantDTO participantDto, Appointment appointment) {
+        String participantsStr = appointment.getTeilnehmer();
+
+        // Split participants into an Arraylist
+        List<String> participants = new ArrayList<>();
+        if (participantsStr != null && !participantsStr.isEmpty()) {
+            participants = new ArrayList<>(Arrays.asList(participantsStr.split(",")));
+        }
+
+        // If participant is not present then add to list
+        if (!participants.contains(participantDto.getParticipant())) {
+            participants.add(participantDto.getParticipant());
+        }
+        return participants;
     }
 }
