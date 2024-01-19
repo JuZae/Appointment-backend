@@ -14,4 +14,8 @@ public interface AppointmentService {
     String getParticipantsById(UUID id);
 
     void deleteAppointmentAndOptions(UUID appointmentId);
+
+    AppointmentOption saveAppointmentOption(AppointmentOption appointmentOption);
+
+    void deleteAppointmentOption(UUID optionId);
 }

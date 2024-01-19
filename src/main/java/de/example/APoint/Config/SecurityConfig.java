@@ -28,11 +28,9 @@ public class SecurityConfig {
                 .csrf().disable()
                 // Configure authorization rules
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/auth/**", "/public/opt/**").permitAll()// Permit all requests to your auth endpoints
+                        .requestMatchers("/api/auth/**", "/public/opt/**", "/email/**").permitAll()// Permit all requests to your auth endpoints
                         .anyRequest().authenticated()                // Require authentication for all other requests
                 )
-
-                // Add JWT filter before UsernamePasswordAuthenticationFilter
                 .addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

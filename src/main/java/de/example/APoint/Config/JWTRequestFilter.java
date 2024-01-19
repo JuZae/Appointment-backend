@@ -24,7 +24,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
 
-    private final List<String> allowedPaths = Arrays.asList("/public/opt/", "/api/auth/register");
+    private final List<String> allowedPaths = Arrays.asList("/public/opt/", "/api/auth/register","/email/sendEmail");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)

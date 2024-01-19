@@ -75,6 +75,7 @@ public class AppointmentController {
     //Persist AppointmentOption
     @PostMapping("/saveAppOption")
     public ResponseEntity<?> saveAppointmentOption(@RequestBody AppointmentOption appointmentOption) {
+        System.out.println("SAVE IS CALLED!" + appointmentOption.toString());
             return ResponseEntity.ok(appointmentOptionRepository.save(appointmentOption));
     }
 
@@ -90,16 +91,19 @@ public class AppointmentController {
         return appointmentRepository.findById(UUID.fromString(id));
     }
 
+//    @DeleteMapping("/deleteAppOption/{optionId}")
+//    public ResponseEntity<?> deleteAppointment(@PathVariable UUID appointmentId) {
+//        try {
+//            appointmentService.deleteAppointmentAndOptions(appointmentId);
+//            return ResponseEntity.ok().body("Appointment and associated options deleted successfully.");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
+//        }
+//    }
 
     @DeleteMapping("/deleteAppOption/{optionId}")
-    public ResponseEntity<?> deleteAppointment(@PathVariable UUID appointmentId) {
-        try {
-            appointmentService.deleteAppointmentAndOptions(appointmentId);
-            return ResponseEntity.ok().body("Appointment and associated options deleted successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
-        }
+    public ResponseEntity<?> deleteAppointmentOption(@PathVariable UUID optionId) {
+        appointmentService.deleteAppointmentOption(optionId);
+        return ResponseEntity.ok().build();
     }
-
-
 }

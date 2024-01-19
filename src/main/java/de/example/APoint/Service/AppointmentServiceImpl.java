@@ -99,4 +99,15 @@ public class AppointmentServiceImpl implements AppointmentService {
         //Then, delete appointment itself
         appointmentRepository.deleteById(appointmentId);
     }
+
+
+    @Override
+    public AppointmentOption saveAppointmentOption(AppointmentOption appointmentOption) {
+        return appointmentOptionRepository.save(appointmentOption);
+    }
+
+    @Override
+    public void deleteAppointmentOption(UUID optionId) {
+        appointmentOptionRepository.deleteById(optionId);
+    }
 }
