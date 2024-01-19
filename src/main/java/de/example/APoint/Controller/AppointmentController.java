@@ -90,7 +90,8 @@ public class AppointmentController {
         return appointmentRepository.findById(UUID.fromString(id));
     }
 
-    @DeleteMapping("/deleteAppById/{appointmentId}")
+
+    @DeleteMapping("/deleteAppOption/{optionId}")
     public ResponseEntity<?> deleteAppointment(@PathVariable UUID appointmentId) {
         try {
             appointmentService.deleteAppointmentAndOptions(appointmentId);

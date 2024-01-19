@@ -98,4 +98,14 @@ public class AppointmentOptionController {
         }
         return participants;
     }
+
+    @DeleteMapping("/deleteAppOpt/{appointmentId}")
+    public ResponseEntity<?> deleteAppointment(@PathVariable UUID appointmentId) {
+        try {
+            appointmentService.deleteAppointmentAndOptions(appointmentId);
+            return ResponseEntity.ok().body("Appointment and associated options deleted successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
+        }
+    }
 }
