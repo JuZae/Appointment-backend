@@ -19,6 +19,8 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
     User findByEmail(String email);
+    Boolean existsByUsername(String username);
+    Boolean existsByEmail(String email);
 
 // This would return the whole User Entity with the password!
 //    @Query("SELECT u FROM User u WHERE u.id = :id")

@@ -30,9 +30,35 @@ public class UserServiceImpl implements UserService{
                 userDTO.getEmail(),
                 this.passwordEncoder.encode(userDTO.getPassword())
         );
+
+
         userRepository.save(user);
         return user.getUsername();
     }
+
+    @Override
+    public LoginResponse registerUser(UserDTO userDTO) {
+        // Check if user with the same username or email already exists in the DB
+        if (userRepository.existsByUsername(userDTO.getUsername())) {
+            return new LoginResponse("Username already taken", false, null, null);
+        }
+        if (userRepository.existsByEmail(userDTO.getEmail())) {
+            return new LoginResponse("Email already in use", false, null, null);
+        }
+
+        // If user doesn't exist, create a new user
+        User user = new User(
+                userDTO.getId(),
+                userDTO.getUsername(),
+                userDTO.getEmail(),
+                this.passwordEncoder.encode(userDTO.getPassword())
+        );
+
+        userRepository.save(user);
+        String token = jwtUtil.generateToken(user.getEmail());
+        return new LoginResponse("User registered successfully", true, token, user.getId());
+    }
+
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -57,29 +83,6 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-//    @Override
-//    public LoginResponse loginUser(LoginDTO loginDTO) {
-//        User userDBCheck = userRepository.findByEmail(loginDTO.getEmail());
-//
-//        if(userDBCheck != null) {
-//            String password = loginDTO.getPassword();
-//            String encodedPassword = userDBCheck.getPassword();
-//            Boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
-//
-//            if(isPwdRight) {
-//                Optional<User> userEmailPasswordCheck = userRepository.findOneByEmailAndPassword(loginDTO.getEmail(), encodedPassword);
-//                if(userEmailPasswordCheck.isPresent()) {
-//                    return new LoginResponse("Login Success", true);
-//                } else {
-//                    return new LoginResponse("Login Failed", false);
-//                }
-//            } else {
-//                return new LoginResponse("Password doesn't match", false);
-//            }
-//        } else {
-//            return new LoginResponse("Email does not exist", false);
-//        }
-//    }
 
     @Override
     public Boolean checkIfUserIsInDB(UUID id) {

@@ -64,7 +64,6 @@ public class AppointmentController {
     public ResponseEntity<?> saveAppointment(@RequestBody Appointment appointment) {
         Boolean isUserInDB = userService.checkIfUserIsInDB(appointment.getFk_userID());
         if(isUserInDB) {
-            //TODO: hier die Deadline Funktionalität anstoßen!
             Appointment appointmentResponse  = appointmentRepository.save(appointment);
 
             return ResponseEntity.ok(appointmentResponse);
@@ -75,7 +74,6 @@ public class AppointmentController {
     //Persist AppointmentOption
     @PostMapping("/saveAppOption")
     public ResponseEntity<?> saveAppointmentOption(@RequestBody AppointmentOption appointmentOption) {
-        System.out.println("SAVE IS CALLED!" + appointmentOption.toString());
             return ResponseEntity.ok(appointmentOptionRepository.save(appointmentOption));
     }
 
@@ -103,7 +101,15 @@ public class AppointmentController {
 
     @DeleteMapping("/deleteAppOption/{optionId}")
     public ResponseEntity<?> deleteAppointmentOption(@PathVariable UUID optionId) {
+        System.out.println("DELETE IS CALLED: " + optionId);
         appointmentService.deleteAppointmentOption(optionId);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/deleteAppById/{appId}")
+    public ResponseEntity<?> deleteAppById(@PathVariable UUID appId) {
+        System.out.println("DELETE IS CALLED: " + appId);
+        appointmentService.deleteAppointmentAndOptions(appId);
         return ResponseEntity.ok().build();
     }
 }

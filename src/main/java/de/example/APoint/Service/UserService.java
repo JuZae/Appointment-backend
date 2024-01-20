@@ -9,6 +9,10 @@ import java.util.UUID;
 
 public interface UserService {
     String addUser(UserDTO userDTO);
+
+    LoginResponse registerUser(UserDTO userDTO);
+
+
     LoginResponse loginUser(LoginDTO loginDTO);
 
     Boolean checkIfUserIsInDB(UUID id);

@@ -5,6 +5,7 @@ import de.example.APoint.DTO.UserDTO;
 import de.example.APoint.Response.LoginResponse;
 import de.example.APoint.Service.UserService;
 import jakarta.validation.Valid;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +17,21 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+//    @PostMapping("/register")
+//    public String registerUser(@RequestBody UserDTO userDTO) {
+//
+//        String id = userService.addUser(userDTO);
+//        return id;
+//    }
+
     @PostMapping("/register")
-    public String registerUser(@RequestBody UserDTO userDTO) {
-        String id = userService.addUser(userDTO);
-        return id;
+    public ResponseEntity<?> registerUser(@Valid @RequestBody UserDTO userDTO) {
+        LoginResponse loginResponse = userService.registerUser(userDTO);
+        if(loginResponse.getStatus()) {
+            return ResponseEntity.ok(loginResponse);
+        } else {
+            return ResponseEntity.badRequest().body(loginResponse);
+        }
     }
 
 //    @PostMapping("/login")
