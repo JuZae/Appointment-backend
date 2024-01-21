@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:9000", "http://49.13.170.189:9000"})
+@CrossOrigin(origins = "*")
 @RequestMapping("/public/opt")
 public class AppointmentOptionController {
 

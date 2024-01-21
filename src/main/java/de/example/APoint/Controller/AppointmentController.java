@@ -20,7 +20,7 @@ import java.util.UUID;
 
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:9000", "http://49.13.170.189:9000"})
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/app")
 public class AppointmentController {
 
