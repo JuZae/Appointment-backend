@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:9000")
+@CrossOrigin(origins = {"http://localhost:9000", "http://49.13.170.189:9000"})
 @RequestMapping("/api")
 class AutocompleteController {
 
