@@ -48,30 +48,27 @@ public class AppointmentServiceImpl implements AppointmentService {
             AppointmentOption dbApo = appointmentOptionRepository.findById(incomingApo.getId())
                     .orElseThrow(() -> new IllegalArgumentException("AppointmentOption not found with id: " + incomingApo.getId()));
 
-            // Get yes and no lists from DB and turn into list if is null
+            // Initialize lists from DB, use empty list if null
             List<String> yesDB = dbApo.getTeilnehmerYes() != null ? dbApo.getTeilnehmerYes() : new ArrayList<>();
             List<String> noDB = dbApo.getTeilnehmerNo() != null ? dbApo.getTeilnehmerNo() : new ArrayList<>();
 
-            // Do the same with incoming
-            List<String> yesIncoming = incomingApo.getTeilnehmerYes() != null ? incomingApo.getTeilnehmerYes() : new ArrayList<>();
-            List<String> noIncoming = incomingApo.getTeilnehmerNo() != null ? incomingApo.getTeilnehmerNo() : new ArrayList<>();
-
-            // For each participant in the incoming yes list, add to the DB yes list if not already present and remove from DB no list
-            for (String participant : yesIncoming) {
+            // Process each participant in incoming 'Yes' list
+            for (String participant : incomingApo.getTeilnehmerYes()) {
                 if (!yesDB.contains(participant)) {
-                    yesDB.add(participant); //Add to yes list if not already present
+                    yesDB.add(participant); // Add to 'Yes' list if not already present
                 }
-                noDB.remove(participant); // Remove from no list if present
+                noDB.remove(participant); // Remove from 'No' list if present
             }
 
-            // For each participant in the incoming no list, add to the DB no list if not already present and remove from DB yes list
-            for (String participant : noIncoming) {
+            // Process each participant in incoming 'No' list
+            for (String participant : incomingApo.getTeilnehmerNo()) {
                 if (!noDB.contains(participant)) {
-                    noDB.add(participant);
+                    noDB.add(participant); // Add to 'No' list if not already present
                 }
-                yesDB.remove(participant); // Remove from yes list if present
+                yesDB.remove(participant); // Remove from 'Yes' list if present
             }
 
+            // Update the AppointmentOption with modified lists
             dbApo.setTeilnehmerYes(yesDB);
             dbApo.setTeilnehmerNo(noDB);
 
@@ -81,6 +78,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             throw new DeadlineExceededException("Deadline has exceeded!");
         }
     }
+
 
     @Override
     public String getParticipantsById(UUID id) {
