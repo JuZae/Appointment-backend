@@ -9,6 +9,7 @@ import de.example.APoint.Repository.UserRepository;
 import de.example.APoint.Repository.VerificationTokenRepository;
 import de.example.APoint.Response.LoginResponse;
 import de.example.APoint.Util.JwtUtil;
+import jakarta.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -58,6 +59,27 @@ public class UserServiceImpl implements UserService{
         user.setRole(Role.USER); // Default role
         userRepository.save(user);
 
+        sendVerificationEmail(user);
+
+        return new LoginResponse("User registered successfully. Please check your email to verify your account.", true, null, user.getId());
+    }
+
+    @Override
+    public void resendVerificationEmailByEmail(@Email String email) {
+        User user;
+        try {
+            user = userRepository.findByEmail(email);
+            if (!user.isVerified()) {
+                sendVerificationEmail(user);
+            } else {
+                throw new IllegalArgumentException("User already verified");
+            }
+        }catch(IllegalArgumentException i) {
+            new IllegalArgumentException("Invalid E-Mail");
+        }
+    }
+
+    private void sendVerificationEmail(User user) {
         // Generate verification token
         String token = UUID.randomUUID().toString();
         createVerificationTokenForUser(user, token);
@@ -72,8 +94,6 @@ public class UserServiceImpl implements UserService{
                 + "<p>If you did not sign up for an APoint account, please ignore this email.</p>";
 
         emailService.sendEmail(user.getEmail(), "Verify your account", emailBody);
-
-        return new LoginResponse("User registered successfully. Please check your email to verify your account.", true, null, user.getId());
     }
 
     @Override
@@ -93,7 +113,8 @@ public class UserServiceImpl implements UserService{
         return false;
     }
 
-    private void createVerificationTokenForUser(User user, String token) {
+    @Override
+    public void createVerificationTokenForUser(User user, String token) {
         VerificationToken verificationToken = new VerificationToken();
         verificationToken.setUser(user);
         verificationToken.setToken(token);

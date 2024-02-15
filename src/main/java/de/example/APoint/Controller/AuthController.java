@@ -29,12 +29,6 @@ public class AuthController {
         }
     }
 
-//    @GetMapping("/verify")
-//    public ResponseEntity<?> verifyUser(@RequestParam("token") String token) {
-//        userService.verifyUser(token);
-//        return ResponseEntity.ok("User verified successfully");
-//    }
-
     @GetMapping("/verify")
     public ResponseEntity<?> verifyUser(@RequestParam("token") String token) {
         boolean isVerified = userService.verifyUser(token);
@@ -43,6 +37,17 @@ public class AuthController {
             return ResponseEntity.ok().body(Map.of("message", "User verified successfully", "verified", true));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "Verification failed. Invalid or expired token.", "verified", false));
+        }
+    }
+
+    @PostMapping("/resend-verification")
+    public ResponseEntity<?> resendVerificationEmail(@RequestBody Map<String, String> emailMap) {
+        String email = emailMap.get("email");
+        try {
+            userService.resendVerificationEmailByEmail(email);
+            return ResponseEntity.ok(Map.of("message", "Verification email resent successfully."));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
     }
 
