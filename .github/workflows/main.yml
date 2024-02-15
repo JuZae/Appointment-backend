@@ -50,4 +50,18 @@ jobs:
       run: ssh root@49.13.170.189 "cd /var/www/myapp/backend && docker build -t apoint-backend-new:latest ."
 
     - name: Run the Docker container
-      run: ssh root@49.13.170.189 "docker run -d --name apoint-backend-new --network apoint -p 8081:8081 apoint-backend-new:latest"
+      run: |
+        ssh root@49.13.170.189 "docker run -d --name apoint-backend-new --network apoint -p 8081:8081 \
+        -e APP_URL='${{ secrets.APP_URL }}' \
+        -e JWT_SECRET='${{ secrets.JWT_SECRET }}' \
+        -e SPRING_DATASOURCE_URL='${{ secrets.SPRING_DATASOURCE_URL }}' \
+        -e SPRING_DATASOURCE_USERNAME='${{ secrets.SPRING_DATASOURCE_USERNAME }}' \
+        -e SPRING_DATASOURCE_PASSWORD='${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
+        -e GOOGLE_API_KEY='${{ secrets.GOOGLE_API_KEY }}' \
+        -e SPRING_MAIL_HOST='${{ secrets.SPRING_MAIL_HOST }}' \
+        -e SPRING_MAIL_PORT='${{ secrets.SPRING_MAIL_PORT }}' \
+        -e SPRING_MAIL_USERNAME='${{ secrets.SPRING_MAIL_USERNAME }}' \
+        -e SPRING_MAIL_PASSWORD='${{ secrets.SPRING_MAIL_PASSWORD }}' \
+        -e SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST='${{ secrets.SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST }}' \
+        apoint-backend-new:latest"
+
