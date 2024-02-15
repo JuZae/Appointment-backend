@@ -1,18 +1,21 @@
 package de.example.APoint.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 public class VerificationToken {
     private static final int EXPIRATION = 60 * 24;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @NotNull
+    private UUID id;
 
     private String token;
 
@@ -22,11 +25,12 @@ public class VerificationToken {
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id")
+    @NotNull
     private User user;
 
     private LocalDateTime expiryDate;
 
-    public VerificationToken(Long id, String token, User user, LocalDateTime expiryDate) {
+    public VerificationToken(UUID id, String token, User user, LocalDateTime expiryDate) {
         this.id = id;
         this.token = token;
         this.user = user;
@@ -36,11 +40,11 @@ public class VerificationToken {
     public VerificationToken() {
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
