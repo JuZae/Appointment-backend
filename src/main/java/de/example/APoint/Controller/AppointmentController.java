@@ -2,13 +2,11 @@ package de.example.APoint.Controller;
 
 import de.example.APoint.Entity.Appointment;
 import de.example.APoint.Entity.AppointmentOption;
-import de.example.APoint.Exceptions.DeadlineExceededException;
 import de.example.APoint.Repository.AppointmentOptionRepository;
 import de.example.APoint.Repository.AppointmentRepository;
 import de.example.APoint.Repository.UserRepository;
 import de.example.APoint.Service.AppointmentService;
 import de.example.APoint.Service.UserService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +18,7 @@ import java.util.UUID;
 
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/app")
 public class AppointmentController {
 

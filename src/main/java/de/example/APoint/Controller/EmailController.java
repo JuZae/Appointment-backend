@@ -2,12 +2,12 @@ package de.example.APoint.Controller;
 
 import de.example.APoint.POJO.EmailRequest;
 import de.example.APoint.Service.EmailService;
-import jdk.jfr.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/email")
 public class EmailController {
     @Autowired
