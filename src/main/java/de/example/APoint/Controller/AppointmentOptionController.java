@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/public/opt")
 public class AppointmentOptionController {
 

@@ -18,7 +18,6 @@ import java.util.UUID;
 
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/api/app")
 public class AppointmentController {
 
