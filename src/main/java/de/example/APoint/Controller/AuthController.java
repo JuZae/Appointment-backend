@@ -5,24 +5,19 @@ import de.example.APoint.DTO.UserDTO;
 import de.example.APoint.Response.LoginResponse;
 import de.example.APoint.Service.UserService;
 import jakarta.validation.Valid;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
     private UserService userService;
 
-//    @PostMapping("/register")
-//    public String registerUser(@RequestBody UserDTO userDTO) {
-//
-//        String id = userService.addUser(userDTO);
-//        return id;
-//    }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserDTO userDTO) {
@@ -34,11 +29,22 @@ public class AuthController {
         }
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<?> loginUser(@Valid @RequestBody LoginDTO loginDTO) {
-//        LoginResponse loginResponse = userService.loginUser(loginDTO);
-//        return ResponseEntity.ok(loginResponse);
+//    @GetMapping("/verify")
+//    public ResponseEntity<?> verifyUser(@RequestParam("token") String token) {
+//        userService.verifyUser(token);
+//        return ResponseEntity.ok("User verified successfully");
 //    }
+
+    @GetMapping("/verify")
+    public ResponseEntity<?> verifyUser(@RequestParam("token") String token) {
+        boolean isVerified = userService.verifyUser(token);
+        System.out.println("USER IST VERIFIZIERT: " + isVerified);
+        if (isVerified) {
+            return ResponseEntity.ok().body(Map.of("message", "User verified successfully", "verified", true));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "Verification failed. Invalid or expired token.", "verified", false));
+        }
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@Valid @RequestBody LoginDTO loginDTO) {
@@ -49,4 +55,6 @@ public class AuthController {
             return ResponseEntity.badRequest().body(loginResponse);
         }
     }
+
+
 }

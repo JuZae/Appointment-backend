@@ -1,5 +1,6 @@
 package de.example.APoint.Entity;
 
+import de.example.APoint.Enum.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class User {
     private UUID id;
 
     @Column(name = "UNAME")
+    @NotNull
     private String username;
 
     @Column(name = "EMAIL")
@@ -27,14 +29,24 @@ public class User {
     @NotNull
     private String password;
 
+    @Column(name = "VERIFIED")
+    @NotNull
+    private boolean verified = false; // default is false
+
+    @Column(name = "ROLE")
+    @Enumerated(EnumType.STRING)
+    private Role role; // Assume Role is an enum you've defined
+
     public User() {
     }
 
-    public User(UUID id, String username, String email, String password) {
+    public User(UUID id, String username, String email, String password, boolean verified, Role role) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.verified = verified;
+        this.role = role;
     }
 
     public UUID getId() {
@@ -67,5 +79,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

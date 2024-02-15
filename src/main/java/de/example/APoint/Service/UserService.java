@@ -8,10 +8,10 @@ import de.example.APoint.Response.LoginResponse;
 import java.util.UUID;
 
 public interface UserService {
-    String addUser(UserDTO userDTO);
 
     LoginResponse registerUser(UserDTO userDTO);
 
+    boolean verifyUser(String token);
 
     LoginResponse loginUser(LoginDTO loginDTO);
 
