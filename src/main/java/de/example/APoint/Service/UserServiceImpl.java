@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService{
                 + "<a href='" + verificationUrl + "'>Verify Email</a>"
                 + "<p>If you did not sign up for an APoint account, please ignore this email.</p>";
 
-        emailService.sendEmail(user.getEmail(), "Verify your account", emailBody);
+        emailService.sendEmailOne(user.getEmail(), "Verify your account", emailBody);
     }
 
     @Override

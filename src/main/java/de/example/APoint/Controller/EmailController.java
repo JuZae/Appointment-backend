@@ -15,7 +15,7 @@ public class EmailController {
 
     @PostMapping(value = "/sendEmail", consumes = "application/json", produces = "application/json")
     public ResponseEntity sendEmail(@RequestBody EmailRequest emailRequest) {
-            emailService.sendEmail(emailRequest.getTo(), emailRequest.getSubject(), emailRequest.getBody());
+            emailService.sendEmailMultiple(emailRequest.getTo(), emailRequest.getSubject(), emailRequest.getBody());
             return ResponseEntity.ok("Email sent successfully.");
     }
 }

@@ -4,15 +4,15 @@ package de.example.APoint.POJO;
  * POJO Class to represent the JSON structure
  */
 public class EmailRequest {
- private String to;
+ private String[] to;
     private String subject;
     private String body;
 
-    public String getTo() {
+    public String[] getTo() {
         return to;
     }
 
-    public void setTo(String to) {
+    public void setTo(String[] to) {
         this.to = to;
     }
 
