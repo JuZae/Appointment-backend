@@ -21,10 +21,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Enable CORS and CSRF protection
-//                .cors(customizer -> customizer.disable()) // Adjusted for possible method change
-//                .csrf(customizer -> customizer.disable()) // Adjusted for possible method change
-
                 .cors().and()
                 .csrf().disable()
                 // Configure authorization rules
