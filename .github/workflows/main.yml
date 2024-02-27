@@ -51,7 +51,7 @@ jobs:
 
     - name: Run the Docker container
       run: |
-        ssh root@49.13.170.189 "docker run -d --name apoint-backend-new --network apoint -p 8084:8084 \
+        ssh root@49.13.170.189 "docker run -d --name apoint-backend-new --network apoint -p 8443:8443 \
         -e APP_CORS_ALLOWEDORIGINS='${{ secrets.APP_CORS_ALLOWEDORIGINS }}' \
         -e SERVER_PORT='${{ secrets.SERVER_PORT }}' \
         -e APP_URL='${{ secrets.APP_URL }}' \
