@@ -65,5 +65,10 @@ jobs:
         -e SPRING_MAIL_USERNAME='${{ secrets.SPRING_MAIL_USERNAME }}' \
         -e SPRING_MAIL_PASSWORD='${{ secrets.SPRING_MAIL_PASSWORD }}' \
         -e SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST='${{ secrets.SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST }}' \
+        -e KEY_STORE='${{ secrets.KEY_STORE }}' \
+        -e KEY_STORE_PASSWORD='${{ secrets.KEY_STORE_PASSWORD }}' \
+        -e KEY_STORE_TYPE='${{ secrets.KEY_STORE_TYPE }}' \
+        -e KEY_STORE_ALIAS='${{ secrets.KEY_STORE_ALIAS }}' \
+        -v /etc/ssl/springbootssl.p12:/etc/ssl/springbootssl.p12 \
         apoint-backend-new:latest"
 
