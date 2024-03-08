@@ -28,14 +28,14 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan 49.13.170.189 >> ~/.ssh/known_hosts
-    - name: Stop existing container
-      run: ssh root@49.13.170.189 "docker stop apoint-backend-new"
+#    - name: Stop existing container
+#      run: ssh root@49.13.170.189 "docker stop apoint-backend-new"
 
-    - name: Remove existing container
-      run: ssh root@49.13.170.189 "docker rm apoint-backend-new"
+#    - name: Remove existing container
+#      run: ssh root@49.13.170.189 "docker rm apoint-backend-new"
 
-    - name: Remove existing image
-      run: ssh root@49.13.170.189 "docker rmi apoint-backend-new"
+#    - name: Remove existing image
+#      run: ssh root@49.13.170.189 "docker rmi apoint-backend-new"
 
     - name: Remove existing files
       run: ssh root@49.13.170.189 "rm -rf /var/www/myapp/backend"
@@ -46,29 +46,7 @@ jobs:
     - name: Transfer files
       run: |
         scp -r target Dockerfile root@49.13.170.189:/var/www/myapp/backend
-    - name: Build the Docker image
-      run: ssh root@49.13.170.189 "cd /var/www/myapp/backend && docker build -t apoint-backend-new:latest ."
 
-    - name: Run the Docker container
-      run: |
-        ssh root@49.13.170.189 "docker run -d --restart unless-stopped --name apoint-backend-new --network apoint \
-        -e APP_CORS_ALLOWEDORIGINS='${{ secrets.APP_CORS_ALLOWEDORIGINS }}' \
-        -e SERVER_PORT='${{ secrets.SERVER_PORT }}' \
-        -e APP_URL='${{ secrets.APP_URL }}' \
-        -e JWT_SECRET='${{ secrets.JWT_SECRET }}' \
-        -e SPRING_DATASOURCE_URL='${{ secrets.SPRING_DATASOURCE_URL }}' \
-        -e SPRING_DATASOURCE_USERNAME='${{ secrets.SPRING_DATASOURCE_USERNAME }}' \
-        -e SPRING_DATASOURCE_PASSWORD='${{ secrets.SPRING_DATASOURCE_PASSWORD }}' \
-        -e GOOGLE_API_KEY='${{ secrets.GOOGLE_API_KEY }}' \
-        -e SPRING_MAIL_HOST='${{ secrets.SPRING_MAIL_HOST }}' \
-        -e SPRING_MAIL_PORT='${{ secrets.SPRING_MAIL_PORT }}' \
-        -e SPRING_MAIL_USERNAME='${{ secrets.SPRING_MAIL_USERNAME }}' \
-        -e SPRING_MAIL_PASSWORD='${{ secrets.SPRING_MAIL_PASSWORD }}' \
-        -e SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST='${{ secrets.SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST }}' \
-        -e KEY_STORE='${{ secrets.KEY_STORE }}' \
-        -e KEY_STORE_PASSWORD='${{ secrets.KEY_STORE_PASSWORD }}' \
-        -e KEY_STORE_TYPE='${{ secrets.KEY_STORE_TYPE }}' \
-        -e KEY_STORE_ALIAS='${{ secrets.KEY_STORE_ALIAS }}' \
-        -v /etc/ssl/springbootssl.p12:/etc/ssl/springbootssl.p12 \
-        apoint-backend-new:latest"
+    - name: Run the Docker Compose
+      run: ssh root@49.13.170.189 "cd /var/www/myapp && docker-compose up -d --build"
 
