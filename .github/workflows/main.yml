@@ -54,7 +54,7 @@ jobs:
       run: ssh root@49.13.170.189 "cd /var/www/myapp && docker-compose up -d"
 
     - name: Post Docker Compose Cleanup
-      run: ssh root@49.13.170.189 "cd /var/www/myapp && docker image prune"
+      run: ssh root@49.13.170.189 "cd /var/www/myapp && docker image prune -f"
 
     - name: Reload Nginx
       run: ssh root@49.13.170.189 "sudo nginx -s reload"      
