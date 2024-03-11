@@ -48,7 +48,10 @@ jobs:
         scp -r target Dockerfile root@49.13.170.189:/var/www/myapp/backend
 
     - name: Run the Docker Compose
-      run: ssh root@49.13.170.189 "cd /var/www/myapp && docker-compose up -d --build"
+      run: ssh root@49.13.170.189 "cd /var/www/myapp && docker-compose build --no-cache"
+
+    - name: Run the Docker Compose
+      run: ssh root@49.13.170.189 "cd /var/www/myapp && docker-compose up -d"
 
     - name: Reload Nginx
       run: ssh root@49.13.170.189 "sudo nginx -s reload"      
