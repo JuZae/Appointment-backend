@@ -40,12 +40,15 @@ jobs:
     - name: Remove existing files
       run: ssh root@49.13.170.189 "rm -rf /var/www/myapp/backend"
 
-    - name: Create new backend folder
-      run: ssh root@49.13.170.189 "mkdir /var/www/myapp/backend"
+#    - name: Create new backend folder
+#      run: ssh root@49.13.170.189 "mkdir /var/www/myapp/backend"
+
+    - name: Clone the repository
+      run: ssh root@49.13.170.189 "git clone https://github.com/JuZae/Appointment-backend.git /var/www/myapp/backend"      
       
-    - name: Transfer files
-      run: |
-        scp -r target Dockerfile root@49.13.170.189:/var/www/myapp/backend
+#    - name: Transfer files
+#      run: |
+#        scp -r target Dockerfile root@49.13.170.189:/var/www/myapp/backend
 
     - name: Build new images
       run: ssh root@49.13.170.189 "cd /var/www/myapp && docker-compose build --no-cache"
