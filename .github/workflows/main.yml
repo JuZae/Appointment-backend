@@ -41,7 +41,7 @@ jobs:
       run: ssh root@49.13.170.189 "rm -rf /var/www/myapp/backend"
 
     - name: Create new backend folder
-      run: ssh root@49.13.170.189 "mkdir /var/www/myapp/backend"
+      run: ssh root@49.13.170.189 "mkdir /var/www/myapp/backend"    
       
     - name: Transfer files
       run: |
